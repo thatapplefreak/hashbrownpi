@@ -1,9 +1,10 @@
 import json
 
+
 class Config:
 
-    config_file = None #file reference to config file
-    config_dict = None #dict of config
+    config_file = None  # file reference to config file
+    config_dict = None  # dict of config
 
     def __init__(self):
         pass

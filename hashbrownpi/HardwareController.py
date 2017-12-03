@@ -2,7 +2,7 @@
 
 class HardwareController:
 
-    led_pins = None
+    led_pins = None  # ordered list of pins LEDs are connected to
 
     def __init__(self, led_pins):
         """
