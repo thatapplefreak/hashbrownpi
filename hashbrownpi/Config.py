@@ -18,3 +18,17 @@ class Config:
         :return: List of the GPIO pins that are connected to LEDs, in order
         """
         return self.config_dict["led_pins"]
+
+    def get_coinbase(self):
+        """
+        Dummy data for header of block
+        :return: dummy data
+        """
+        return self.config_dict["coinbase"]
+
+    def get_trasactions(self):
+        """
+        Gets a list of transactions
+        :return: list of transactions to put in block
+        """
+        return self.config_dict["txs"]
