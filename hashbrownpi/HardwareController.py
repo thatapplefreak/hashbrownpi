@@ -1,3 +1,4 @@
+import RPi.GPIO as GPIO
 
 
 class HardwareController:
@@ -10,6 +11,8 @@ class HardwareController:
         :param led_pins: Array list of GPIO pins for the LEDs in order
         """
         self.led_pins = led_pins
+        GPIO.setmode(GPIO.BOARD)
+
 
     def reset_leds(self):
         """
@@ -23,7 +26,7 @@ class HardwareController:
         Turns on led at the specified index in the array
         :param index: position of led
         """
-        # TODO
+        GPIO.output(self.led_pins[index], True)
         pass
 
     def turn_off_led(self, index):
@@ -31,5 +34,5 @@ class HardwareController:
         Turns off the led at the specified index in the array
         :param index: position of the led
         """
-        # TODO
+        GPIO.output(self.led_pins[index], False)
         pass
