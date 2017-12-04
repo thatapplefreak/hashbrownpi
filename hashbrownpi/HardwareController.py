@@ -1,4 +1,12 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except:
+    print("Cannot import RPi.GPIO. Importing FakeRPi")
+    try:
+        import FakeRPi.GPIO as GPIO
+    except:
+        print("Cannot import FakeRPI")
+
 
 
 class HardwareController:

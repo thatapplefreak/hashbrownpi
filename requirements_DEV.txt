@@ -1,0 +1,2 @@
+###### Requirements for dev work ######
+git+https://github.com/sn4k3/FakeRPi

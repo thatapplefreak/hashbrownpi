@@ -1,0 +1,2 @@
+###### Requirements for running on an RPI ######
+RPi.GPIO
