@@ -18,7 +18,7 @@ class HardwareController:
         """
         Resets all LEDs to off
         """
-        for i in range(0, len(self.led_pins - 1)):
+        for i in range(0, len(self.led_pins) - 1):
             self.turn_off_led(i)
 
     def turn_on_led(self, index):
@@ -27,7 +27,6 @@ class HardwareController:
         :param index: position of led
         """
         GPIO.output(self.led_pins[index], True)
-        pass
 
     def turn_off_led(self, index):
         """
@@ -35,4 +34,3 @@ class HardwareController:
         :param index: position of the led
         """
         GPIO.output(self.led_pins[index], False)
-        pass
