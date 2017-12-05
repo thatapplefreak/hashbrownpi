@@ -143,7 +143,7 @@ class Hasher:
             raise Exception("No data to hash")
         self.nonce += 1
         return self.algorithm(
-            self.data + self.nonce
+            self.data + str(self.nonce)
         ).hexdigest()
 
     def reset(self):
