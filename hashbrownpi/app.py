@@ -1,7 +1,13 @@
 import hashlib
-from .Config import Config
-from .HardwareController import HardwareController
-from .Hasher import Hasher
+import json
+try:
+    import RPi.GPIO as GPIO
+except:
+    print("Cannot import RPi.GPIO. Importing FakeRPi")
+    try:
+        import FakeRPi.GPIO as GPIO
+    except:
+        print("Cannot import FakeRPI")
 
 
 class App:
@@ -75,6 +81,119 @@ class App:
                 print("Unknown algorithm, try again!")
 
 
+class HardwareController:
+
+    led_pins = None  # ordered list of pins LEDs are connected to
+
+    def __init__(self, led_pins):
+        """
+        Inits the hardware controller
+        :param led_pins: Array list of GPIO pins for the LEDs in order
+        """
+        self.led_pins = led_pins
+        GPIO.setmode(GPIO.BOARD)
+
+
+    def reset_leds(self):
+        """
+        Resets all LEDs to off
+        """
+        for i in range(0, len(self.led_pins) - 1):
+            self.turn_off_led(i)
+
+    def turn_on_led(self, index):
+        """
+        Turns on led at the specified index in the array
+        :param index: position of led
+        """
+        GPIO.output(self.led_pins[index], True)
+
+    def turn_off_led(self, index):
+        """
+        Turns off the led at the specified index in the array
+        :param index: position of the led
+        """
+        GPIO.output(self.led_pins[index], False)
+
+
+class Hasher:
+    """
+    The "miner" responsible for hashing the data
+    """
+
+    algorithm = None
+    nonce = 0
+    data = None
+
+    def __init__(self, algorithm):
+        """
+        Forms a hashing "miner"
+        :param algorithm: algorithm to use when hashing
+        """
+        if algorithm not in hashlib.algorithms_available:
+            raise Exception("invalid algorithm")
+        self.algorithm = getattr(hashlib, algorithm)
+
+    def next_hash(self):
+        """
+        Takes the data and adds a nonce, hashes and returns results
+        :return: hex results
+        """
+        if self.data is None:
+            raise Exception("No data to hash")
+        self.nonce += 1
+        return self.algorithm(
+            self.data + self.nonce
+        ).hexdigest()
+
+    def reset(self):
+        """
+        Remove data and reset nonce
+        """
+        self.nonce = 0
+        self.data = None
+
+    def set_data(self, data):
+        """
+        Set the data
+        :param data: the data
+        """
+        self.data = data
+
+
+class Config:
+
+    config_file = None  # file reference to config file
+    config_dict = None  # dict of config
+
+    def __init__(self):
+        pass
+
+    def load(self, config_file):
+        self.config_file = config_file
+        self.config_dict = json.load(config_file)
+
+    def get_led_pins(self):
+        """
+        :return: List of the GPIO pins that are connected to LEDs, in order
+        """
+        return self.config_dict["led_pins"]
+
+    def get_coinbase(self):
+        """
+        Dummy data for header of block
+        :return: dummy data
+        """
+        return self.config_dict["coinbase"]
+
+    def get_trasactions(self):
+        """
+        Gets a list of transactions
+        :return: list of transactions to put in block
+        """
+        return self.config_dict["txs"]
+
+
 if __name__ == '__main__':
     # Import config file, and close it after getting all necessary data
     config = Config()
@@ -88,11 +207,11 @@ if __name__ == '__main__':
     print("Welcome to HashbrownPi\n"
           "Copyright 2017 Byron Zaharako & Robert Nill")
 
-
+    app = App()
     # Run the first simulation. Continue to run sims until the user quits
     var_continue = "y"
     while var_continue is "y":
-        App().runSimulation(config, hardware)
+        app.runSimulation(config, hardware)
         var_continue = input("Run another simulation? (y/n): ")
         while var_continue is not "y" and var_continue is not "n":
             var_continue = input("Please enter \"y\" or \"n\"\n"
