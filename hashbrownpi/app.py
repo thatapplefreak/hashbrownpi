@@ -23,7 +23,7 @@ class App:
 
         for i in range(1, cycles + 1):
             hasher = Hasher(algorithm)
-            hasher.set_data(config.get_coinbase() + config.get_trasactions())
+            hasher.set_data(config.get_coinbase() + ''.join(config.get_trasactions()))
             #set timer
             valid = False
             while(not valid):
