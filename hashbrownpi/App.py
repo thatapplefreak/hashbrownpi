@@ -1,7 +1,7 @@
 import hashlib
-from hashbrownpi.Config import Config
-from hashbrownpi.HardwareController import HardwareController
-from hashbrownpi.Hasher import Hasher
+from .Config import Config
+from .HardwareController import HardwareController
+from .Hasher import Hasher
 
 
 class App:
