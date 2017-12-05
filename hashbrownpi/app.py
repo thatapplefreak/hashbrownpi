@@ -1,5 +1,7 @@
 import hashlib
 import json
+import time
+import base64
 try:
     import RPi.GPIO as GPIO
 except:
@@ -11,6 +13,7 @@ except:
 
 
 class App:
+
 
     """
     Run 1..n cycles based on user input.
@@ -24,11 +27,20 @@ class App:
         for i in range(1, cycles + 1):
             hasher = Hasher(algorithm)
             hasher.set_data(config.get_coinbase() + ''.join(config.get_trasactions()))
-            #set timer
+            startTime = time.time()
             valid = False
-            while(not valid):
-                hash = hasher.next_hash()
-                #check hash
+            while not valid:
+                hash = str(hasher.next_hash())
+                hashbinary = base64.b16decode(hash)
+                hashdiff = #calculate this (number of 0s in hashbinary string until hit a 1)
+                if hashdiff >= difficulty:
+                    valid = True
+                    elapsed = time.time() - startTime
+                    #lights
+                else:
+                    #check level of hash
+                    #lights
+                    pass
             #end timer and record
 
     """
