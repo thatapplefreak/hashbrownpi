@@ -5,30 +5,6 @@ from .Hasher import Hasher
 
 
 class App:
-    def main(self):
-        # Import config file, and close it after getting all necessary data
-        config = Config()
-        config_file = open("config.json")
-        config.load(config_file)
-
-
-        # Initiate hardware controller
-        hardware = HardwareController(config.get_led_pins())
-
-
-        # Introduce user to the application
-        print("Welcome to HashbrownPi\n"
-              "Copyright 2017 Byron Zaharako & Robert Nill")
-
-
-        # Run the first simulation. Continue to run sims until the user quits
-        var_continue = "y"
-        while var_continue is "y":
-            self.runSimulation(config, hardware)
-            var_continue = input("Run another simulation? (y/n): ")
-            while var_continue is not "y" and var_continue is not "n":
-                var_continue = input("Please enter \"y\" or \"n\"\n"
-                                     "Run another simulation? (y/n): ")
 
     """
     Run 1..n cycles based on user input.
@@ -99,4 +75,25 @@ class App:
                 print("Unknown algorithm, try again!")
 
 
-App().main()
+if __name__ == '__main__':
+    # Import config file, and close it after getting all necessary data
+    config = Config()
+    config_file = open("config.json")
+    config.load(config_file)
+
+    # Initiate hardware controller
+    hardware = HardwareController(config.get_led_pins())
+
+    # Introduce user to the application
+    print("Welcome to HashbrownPi\n"
+          "Copyright 2017 Byron Zaharako & Robert Nill")
+
+
+    # Run the first simulation. Continue to run sims until the user quits
+    var_continue = "y"
+    while var_continue is "y":
+        App().runSimulation(config, hardware)
+        var_continue = input("Run another simulation? (y/n): ")
+        while var_continue is not "y" and var_continue is not "n":
+            var_continue = input("Please enter \"y\" or \"n\"\n"
+                                 "Run another simulation? (y/n): ")
