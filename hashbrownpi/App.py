@@ -1,17 +1,30 @@
 import hashlib
+from hashbrownpi.Config import Config
+from hashbrownpi.HardwareController import HardwareController
+from hashbrownpi.Hasher import Hasher
+
 
 class App:
     def main(self):
-        # Import config file
+        # Import config file, and close it after getting all necessary data
+        config = Config()
+        config_file = open("config.json")
+        config.load(config_file)
+
+
+        # Initiate hardware controller
+        hardware = HardwareController(config.get_led_pins())
+
 
         # Introduce user to the application
         print("Welcome to HashbrownPi\n"
               "Copyright 2017 Byron Zaharako & Robert Nill")
 
+
         # Run the first simulation. Continue to run sims until the user quits
         var_continue = "y"
         while var_continue is "y":
-            self.runSimulation()
+            self.runSimulation(config, hardware)
             var_continue = input("Run another simulation? (y/n): ")
             while var_continue is not "y" and var_continue is not "n":
                 var_continue = input("Please enter \"y\" or \"n\"\n"
@@ -19,12 +32,22 @@ class App:
 
     """
     Run 1..n cycles based on user input.
+    Pass in the config file for the coinbase data, and the hardware controller for manipulating the LEDs
     """
-    def runSimulation(self):
+    def runSimulation(self, config, hardware):
         cycles = self.getCycles()
         difficulty = self.getDifficulty()
         algorithm = self.getAlgorithm()
-        # Run the simulation
+
+        for i in range(1, cycles + 1):
+            hasher = Hasher(algorithm)
+            hasher.set_data(config.get_coinbase() + config.get_trasactions())
+            #set timer
+            valid = False
+            while(not valid):
+                hash = hasher.next_hash()
+                #check hash
+            #end timer and record
 
     """
     Prompt the user for cycles
