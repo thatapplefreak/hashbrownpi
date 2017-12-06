@@ -23,14 +23,18 @@ class App:
         difficulty = self.getDifficulty()
         algorithm = self.getAlgorithm()
 
+        time_results = []
+
         for i in range(1, cycles + 1):
             hasher = Hasher(algorithm)
             hasher.set_data(config.get_coinbase() + ''.join(config.get_trasactions()))
             startTime = time.time()
+            highest_met = 0
             valid = False
             while not valid:
-                hashbinary = str(bin(int(hasher.next_hash(), 16))).split('b')[1].zfill(hasher.digest_size())  # this works, don't screw with
-                print(hashbinary)
+                hash = hasher.next_hash()
+                print(hash)
+                hashbinary = str(bin(int(hash, 16))).split('b')[1].zfill(hasher.digest_size())  # this works, don't screw with
                 hashdiff = 0
                 for x in range(0, len(hashbinary) - 1):
                     if hashbinary[x] == '0':
@@ -40,12 +44,14 @@ class App:
                 if hashdiff >= difficulty:
                     valid = True
                     elapsed = time.time() - startTime
+                    print(str(elapsed) + "seconds")
+                    time_results.append(elapsed)
                     #lights
                 else:
-                    #check level of hash
+                    if highest_met < hashdiff:
+                        highest_met = hashdiff
                     #lights
-                    pass
-            #end timer and record
+                # Show Stats
 
     """
     Prompt the user for cycles
