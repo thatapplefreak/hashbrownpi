@@ -1,7 +1,6 @@
 import hashlib
 import json
 import time
-import base64
 try:
     import RPi.GPIO as GPIO
 except:
@@ -30,9 +29,14 @@ class App:
             startTime = time.time()
             valid = False
             while not valid:
-                hash = str(hasher.next_hash())
-                hashbinary = base64.b16decode(hash)
-                hashdiff = #calculate this (number of 0s in hashbinary string until hit a 1)
+                hashbinary = str(bin(int(hasher.next_hash(), 16))).split('b')[1].zfill(hasher.digest_size())  # this works, don't screw with
+                print(hashbinary)
+                hashdiff = 0
+                for x in range(0, len(hashbinary) - 1):
+                    if hashbinary[x] == '0':
+                        hashdiff += 1
+                    else:
+                        break
                 if hashdiff >= difficulty:
                     valid = True
                     elapsed = time.time() - startTime
@@ -157,6 +161,9 @@ class Hasher:
         return self.algorithm(
             str(self.data + str(self.nonce)).encode('utf-8')
         ).hexdigest()
+
+    def digest_size(self):
+        return self.algorithm().digest_size * 8
 
     def reset(self):
         """
