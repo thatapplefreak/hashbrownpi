@@ -43,17 +43,23 @@ class App:
                         hashdiff += 1
                     else:
                         break
+                # We've got a valid hash!
                 if hashdiff >= difficulty:
                     valid = True
                     elapsed = time.time() - startTime
                     print(str(elapsed) + "seconds")
                     time_results.append(elapsed)
                     hash_results.append(hash)
-                    #lights
+
+                    print("Success!")
+                    self.successLights(hardware) #Success lights
+                # Not valid just yet!
                 else:
                     if highest_met < hashdiff:
                         highest_met = hashdiff
-                    #lights
+
+                        self.progressLight(hashdiff, hardware) #Turn on light
+
         # Show Stats
         print("Statistics:")
         for x in range(0, cycles):
@@ -62,6 +68,30 @@ class App:
             print("\tFound Hash: " + str(hash_results[x]))
         average_time = sum(time_results) / float(len(time_results))
         print("Average Time: " + str(average_time))
+
+    """
+    Turn on one of the difficulty lights to signal progress made
+    """
+    def progressLight(self, hashdiff, hardware):
+        if(hashdiff >= 1 && hashdiff <= 16):
+            hardware.turn_on_led(hashdiff - 1)
+
+    """
+    Let's blink some lights! Hooray!
+    """
+    def successLights(self, hardware):
+        for i in range(1, 5):
+            self.turnAllOff(hardware)
+            time.sleep(1)
+            self.turnAllOn(hardware)
+
+    def turnAllOn(self, hardware):
+        for i in range(0, 15):
+            hardware.turn_on_led(i)
+
+    def turnAllOff(self, hardware):
+        for i in range(0, 15):
+            hardware.turn_off_led(i)
 
     """
     Prompt the user for cycles
