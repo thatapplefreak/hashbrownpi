@@ -163,7 +163,7 @@ class HardwareController:
         :param led_pins: Array list of GPIO pins for the LEDs in order
         """
         self.led_pins = led_pins
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         for pin in led_pins:
             print(pin)
             GPIO.setup(pin, GPIO.OUT)
