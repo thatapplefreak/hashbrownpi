@@ -158,6 +158,8 @@ class HardwareController:
         """
         self.led_pins = led_pins
         GPIO.setmode(GPIO.BOARD)
+        for pin in led_pins:
+            GPIO.setup(pin, GPIO.OUT)
 
 
     def reset_leds(self):
