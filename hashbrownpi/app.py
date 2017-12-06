@@ -92,16 +92,18 @@ class App:
     def successLights(self, hardware):
         for i in range(1, 5):
             self.turnAllOff(hardware)
-            time.sleep(1)
             self.turnAllOn(hardware)
+            time.sleep(1)
 
     def turnAllOn(self, hardware):
-        for i in range(0, 15):
-            hardware.turn_on_led(i)
+        #for i in range(0, 15):
+        #    hardware.turn_on_led(i)
+        hardware.turnAllOn()
 
     def turnAllOff(self, hardware):
-        for i in range(0, 15):
-            hardware.turn_off_led(i)
+        #for i in range(0, 15):
+        #    hardware.turn_off_led(i)
+        hardware.turnAllOff()
 
     """
     Prompt the user for cycles
@@ -167,6 +169,14 @@ class HardwareController:
         for pin in led_pins:
             print(pin)
             GPIO.setup(pin, GPIO.OUT)
+
+    def turnAllOn(self):
+        for i in range(0, 15):
+            hardware.turn_on_led(self.led_pins[i])
+
+    def turnAllOff(self):
+        for i in range(0, 15):
+            hardware.turn_off_led(self.led_pins[i])
 
 
     def reset_leds(self):
