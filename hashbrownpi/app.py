@@ -60,6 +60,9 @@ class App:
 
                         self.progressLight(hashdiff, hardware) #Turn on light
 
+        # Reset the LEDs
+        self.turnAllOff(hardware)
+
         # Show Stats
         print("Statistics:")
         for x in range(0, cycles):
