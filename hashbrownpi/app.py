@@ -24,6 +24,7 @@ class App:
         algorithm = self.getAlgorithm()
 
         time_results = []
+        hash_results = []
 
         for i in range(1, cycles + 1):
             hasher = Hasher(algorithm)
@@ -46,12 +47,18 @@ class App:
                     elapsed = time.time() - startTime
                     print(str(elapsed) + "seconds")
                     time_results.append(elapsed)
+                    hash_results.append(hash)
                     #lights
                 else:
                     if highest_met < hashdiff:
                         highest_met = hashdiff
                     #lights
-                # Show Stats
+        # Show Stats
+        print("Statistics:")
+        for x in range(0, cycles):
+            print("Cycle " + str(x + 1) + ":")
+            print("\tTime : " + str(time_results[x]))
+            print("\tFound Hash: " + str(hash_results[x]))
 
     """
     Prompt the user for cycles
