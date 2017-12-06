@@ -60,6 +60,8 @@ class App:
             print("Cycle " + str(x + 1) + ":")
             print("\tTime : " + str(time_results[x]))
             print("\tFound Hash: " + str(hash_results[x]))
+        average_time = sum(time_results) / float(len(time_results))
+        print("Average Time: " + str(average_time))
 
     """
     Prompt the user for cycles
