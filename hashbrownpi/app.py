@@ -21,6 +21,9 @@ class App:
     Pass in the config file for the coinbase data, and the hardware controller for manipulating the LEDs
     """
     def runSimulation(self, config, hardware):
+        # Reset the LEDs
+        self.turnAllOff(hardware)
+
         cycles = self.getCycles()
         difficulty = self.getDifficulty()
         algorithm = self.getAlgorithm()
@@ -29,6 +32,9 @@ class App:
         hash_results = []
 
         for i in range(1, cycles + 1):
+            # Reset the LEDs
+            self.turnAllOff(hardware)
+
             hasher = Hasher(algorithm)
             hasher.set_data(config.get_coinbase() + ''.join(config.get_trasactions()))
             startTime = time.time()
