@@ -171,11 +171,11 @@ class HardwareController:
             GPIO.setup(pin, GPIO.OUT)
 
     def turnAllOn(self):
-        for i in range(0, 15):
+        for i in range(0, 14):
             hardware.turn_on_led(self.led_pins[i])
 
     def turnAllOff(self):
-        for i in range(0, 15):
+        for i in range(0, 14):
             hardware.turn_off_led(self.led_pins[i])
 
 
