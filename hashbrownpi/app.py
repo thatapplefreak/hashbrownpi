@@ -96,14 +96,12 @@ class App:
             time.sleep(1)
 
     def turnAllOn(self, hardware):
-        #for i in range(0, 15):
-        #    hardware.turn_on_led(i)
-        hardware.turnAllOn()
+        for i in range(0, 15):
+            hardware.turn_on_led(i)
 
     def turnAllOff(self, hardware):
-        #for i in range(0, 15):
-        #    hardware.turn_off_led(i)
-        hardware.turnAllOff()
+        for i in range(0, 15):
+            hardware.turn_off_led(i)
 
     """
     Prompt the user for cycles
@@ -171,11 +169,11 @@ class HardwareController:
             GPIO.setup(pin, GPIO.OUT)
 
     def turnAllOn(self):
-        for i in range(0, 14):
+        for i in range(0, 15):
             hardware.turn_on_led(self.led_pins[i])
 
     def turnAllOff(self):
-        for i in range(0, 14):
+        for i in range(0, 15):
             hardware.turn_off_led(self.led_pins[i])
 
 
