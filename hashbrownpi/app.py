@@ -1,6 +1,7 @@
 import hashlib
 import json
 import time
+import secrets
 try:
     import RPi.GPIO as GPIO
 except:
@@ -162,6 +163,7 @@ class Hasher:
         if algorithm not in hashlib.algorithms_available:
             raise Exception("invalid algorithm")
         self.algorithm = getattr(hashlib, algorithm)
+        self.reset()
 
     def next_hash(self):
         """
@@ -182,7 +184,7 @@ class Hasher:
         """
         Remove data and reset nonce
         """
-        self.nonce = 0
+        self.nonce = secrets.randbelow(100000000)
         self.data = None
 
     def set_data(self, data):
