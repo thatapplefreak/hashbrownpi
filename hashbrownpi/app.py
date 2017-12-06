@@ -1,7 +1,8 @@
 import hashlib
 import json
 import time
-import secrets
+from random import randint
+#import secrets
 try:
     import RPi.GPIO as GPIO
 except:
@@ -219,7 +220,8 @@ class Hasher:
         """
         Remove data and reset nonce
         """
-        self.nonce = secrets.randbelow(100000000)
+        #self.nonce = secrets.randbelow(100000000)
+        self.nonce = randint(1, 100000000)
         self.data = None
 
     def set_data(self, data):
