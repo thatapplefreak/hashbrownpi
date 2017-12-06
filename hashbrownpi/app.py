@@ -76,7 +76,7 @@ class App:
     Turn on one of the difficulty lights to signal progress made
     """
     def progressLight(self, hashdiff, hardware):
-        if(hashdiff >= 1 && hashdiff <= 16):
+        if(hashdiff >= 1 and hashdiff <= 16):
             hardware.turn_on_led(hashdiff - 1)
 
     """
