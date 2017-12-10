@@ -84,7 +84,8 @@ class App:
     """
     def progressLight(self, hashdiff, hardware):
         if(hashdiff >= 1 and hashdiff <= 16):
-            hardware.turn_on_led(hashdiff - 1)
+            for i in range(0, hashdiff - 1):
+                hardware.turn_on_led(i)
 
     """
     Let's blink some lights! Hooray!
@@ -167,15 +168,6 @@ class HardwareController:
         for pin in led_pins:
             print(pin)
             GPIO.setup(pin, GPIO.OUT)
-
-    def turnAllOn(self):
-        for i in range(0, 15):
-            hardware.turn_on_led(self.led_pins[i])
-
-    def turnAllOff(self):
-        for i in range(0, 15):
-            hardware.turn_off_led(self.led_pins[i])
-
 
     def reset_leds(self):
         """
