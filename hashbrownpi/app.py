@@ -57,10 +57,13 @@ class App:
                     print(str(elapsed) + "seconds")
                     time_results.append(elapsed)
                     hash_results.append(hash)
-
                     print("Success!")
-                    self.holdOnSuccess(hardware, hashdiff) # First, tell the user that a good difficulty has been found
-                    self.successLights(hardware) # THEN CELEBRATE
+
+                    # First, hold on the final hash that's been generated
+                    time.sleep(0.4)
+
+                    self.holdOnSuccess(hardware, hashdiff) # Then, tell the user that a good difficulty has been found
+                    self.successLights(hardware) # FINALLY, CELEBRATE
                 # Not valid just yet!
                 else:
                     if highest_met < hashdiff:
