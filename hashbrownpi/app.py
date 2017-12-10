@@ -111,12 +111,36 @@ class App:
     Let's blink some lights! Hooray!
     """
     def successLights(self, hardware):
-        for i in range(1, 4):
-            self.turnAllOff(hardware)
-            time.sleep(1)
-            self.turnAllOn(hardware)
-            time.sleep(1)
-            self.turnAllOff(hardware)
+        for i in range(2):
+            self.celebrateRow(hardware)
+
+    def celebrateRow(self, hardware):
+        self.turnAllOff(hardware)
+        hardware.turn_on_led(0)
+        hardware.turn_on_led(8)
+        time.sleep(0.1)
+        hardware.turn_on_led(1)
+        hardware.turn_on_led(9)
+        time.sleep(0.1)
+        hardware.turn_on_led(2)
+        hardware.turn_on_led(10)
+        time.sleep(0.1)
+        hardware.turn_on_led(3)
+        hardware.turn_on_led(11)
+        time.sleep(0.1)
+        hardware.turn_on_led(4)
+        hardware.turn_on_led(12)
+        time.sleep(0.1)
+        hardware.turn_on_led(5)
+        hardware.turn_on_led(13)
+        time.sleep(0.1)
+        hardware.turn_on_led(6)
+        hardware.turn_on_led(14)
+        time.sleep(0.1)
+        hardware.turn_on_led(7)
+        hardware.turn_on_led(15)
+        time.sleep(1)
+        self.turnAllOff(hardware)
 
 
     def turnAllOn(self, hardware):
