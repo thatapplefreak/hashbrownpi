@@ -59,7 +59,8 @@ class App:
                     hash_results.append(hash)
 
                     print("Success!")
-                    self.successLights(hardware) #Success lights
+                    self.holdOnSuccess(hardware, hashdiff) # First, tell the user that a good difficulty has been found
+                    self.successLights(hardware) # THEN CELEBRATE
                 # Not valid just yet!
                 else:
                     if highest_met < hashdiff:
@@ -84,8 +85,27 @@ class App:
     """
     def progressLight(self, hashdiff, hardware):
         if(hashdiff >= 1 and hashdiff <= 16):
-            for i in range(0, hashdiff - 1):
+            for i in range(0, hashdiff):
                 hardware.turn_on_led(i)
+        elif(hashdiff > 16):
+            for i in range(0, 16):
+                hardware.turn_on_led(i)
+
+    """
+    Rapidly blink the successful difficulty
+    """
+    def holdOnSuccess(self, hardware, hashdiff):
+        num = 16
+        if(hashdiff < 16):
+            num = hashdiff
+
+        for i in range(5):
+            self.turnAllOff(hardware)
+            time.sleep(0.5)
+            self.progressLight(hashdiff, hardware)
+            time.sleep(0.5)
+            self.turnAllOff(hardware)
+
 
     """
     Let's blink some lights! Hooray!
