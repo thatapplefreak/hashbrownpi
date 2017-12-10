@@ -91,17 +91,20 @@ class App:
     Let's blink some lights! Hooray!
     """
     def successLights(self, hardware):
-        for i in range(1, 5):
+        for i in range(1, 4):
             self.turnAllOff(hardware)
+            time.sleep(1)
             self.turnAllOn(hardware)
             time.sleep(1)
+            self.turnAllOff(hardware)
+
 
     def turnAllOn(self, hardware):
-        for i in range(0, 15):
+        for i in range(0, 16):
             hardware.turn_on_led(i)
 
     def turnAllOff(self, hardware):
-        for i in range(0, 15):
+        for i in range(0, 16):
             hardware.turn_off_led(i)
 
     """
