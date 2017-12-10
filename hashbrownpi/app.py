@@ -60,6 +60,7 @@ class App:
                     print("Success!")
 
                     # First, hold on the final hash that's been generated
+                    self.progressLight(hashdiff, hardware)
                     time.sleep(0.4)
 
                     self.holdOnSuccess(hardware, hashdiff) # Then, tell the user that a good difficulty has been found
